@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Utils : NSObject
 
 +(NSString*)getServerAddress;
-
++(UIImage *)image:(UIImage*)originalImage scaledToSize:(CGSize)size;
 @end

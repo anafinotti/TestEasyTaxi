@@ -7,7 +7,15 @@
 //
 
 #import "Taxi.h"
+#import <JSONKeyMapper.h>
 
 @implementation Taxi
 
+
++(JSONKeyMapper*)keyMapper {
+    return [[JSONKeyMapper alloc] initWithDictionary:@{@"driver-car":@"driverCar",
+                                                       @"driver-name":@"driverName",
+                                                       @"lat":@"lat",
+                                                       @"lng":@"lng"}];
+}
 @end

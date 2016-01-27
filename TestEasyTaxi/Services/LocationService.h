@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Taxis.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface LocationService : NSObject
 
-+(void)getTaxis:(NSNumber *)latitude
-      longitude:(NSNumber *)longitude;
++(void)getTaxis:(double)latitude
+      longitude:(double)longitude
+        success:(void (^)(Taxis *taxis))success
+        failure:(void (^)(NSError *error))failure;
 @end

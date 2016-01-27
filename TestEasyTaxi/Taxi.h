@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <JSONModel.h>
 
+
 @interface Taxi : JSONModel
 
 @property (nonatomic, assign) double lng;

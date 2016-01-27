@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [LocationService getTaxis:@-22.9855469 longitude:@-46.8520404];
+   // [LocationService getTaxis:@-22.9855469 longitude:@-46.8520404];
     
     
     // Do any additional setup after loading the view.

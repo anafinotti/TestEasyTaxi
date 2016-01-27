@@ -10,10 +10,11 @@
 		34D9B18287166AC8DD8E5FA0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E624E35BEA1EBABCB8E51F0 /* libPods.a */; };
 		B05EF26D1C55CC5A0019D9BD /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF26C1C55CC5A0019D9BD /* LocationService.m */; };
 		B05EF26F1C55D0940019D9BD /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B05EF26E1C55D0930019D9BD /* Configuration.plist */; };
-		B05EF2731C5662100019D9BD /* Taxis.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF2721C5662100019D9BD /* Taxis.m */; };
 		B05EF2761C56623E0019D9BD /* Taxi.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF2751C56623E0019D9BD /* Taxi.m */; };
 		B05EF27A1C56C7850019D9BD /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF2791C56C7850019D9BD /* LocationController.m */; };
 		B05EF27D1C56C8F00019D9BD /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF27C1C56C8F00019D9BD /* Utils.m */; };
+		B05EF2801C5871E00019D9BD /* Taxis.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF27F1C5871E00019D9BD /* Taxis.m */; };
+		B05EF2831C5876940019D9BD /* pinHome.png in Resources */ = {isa = PBXBuildFile; fileRef = B05EF2821C5876940019D9BD /* pinHome.png */; };
 		B0A5E1081C552ED900125753 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5E1071C552ED900125753 /* main.m */; };
 		B0A5E10B1C552ED900125753 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5E10A1C552ED900125753 /* AppDelegate.m */; };
 		B0A5E10E1C552ED900125753 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A5E10D1C552ED900125753 /* ViewController.m */; };
@@ -30,14 +31,15 @@
 		B05EF26B1C55CC5A0019D9BD /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationService.h; path = Services/LocationService.h; sourceTree = "<group>"; };
 		B05EF26C1C55CC5A0019D9BD /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationService.m; path = Services/LocationService.m; sourceTree = "<group>"; };
 		B05EF26E1C55D0930019D9BD /* Configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
-		B05EF2711C5662100019D9BD /* Taxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Taxis.h; path = Objects/Taxis.h; sourceTree = "<group>"; };
-		B05EF2721C5662100019D9BD /* Taxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Taxis.m; path = Objects/Taxis.m; sourceTree = "<group>"; };
 		B05EF2741C56623E0019D9BD /* Taxi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Taxi.h; sourceTree = "<group>"; };
 		B05EF2751C56623E0019D9BD /* Taxi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Taxi.m; sourceTree = "<group>"; };
 		B05EF2781C56C7850019D9BD /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationController.h; path = ViewControllers/LocationController.h; sourceTree = "<group>"; };
 		B05EF2791C56C7850019D9BD /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationController.m; path = ViewControllers/LocationController.m; sourceTree = "<group>"; };
 		B05EF27B1C56C8F00019D9BD /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		B05EF27C1C56C8F00019D9BD /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		B05EF27E1C5871DF0019D9BD /* Taxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Taxis.h; path = Objects/Taxis.h; sourceTree = "<group>"; };
+		B05EF27F1C5871E00019D9BD /* Taxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Taxis.m; path = Objects/Taxis.m; sourceTree = "<group>"; };
+		B05EF2821C5876940019D9BD /* pinHome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinHome.png; sourceTree = "<group>"; };
 		B0A5E1031C552ED900125753 /* TestEasyTaxi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestEasyTaxi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A5E1071C552ED900125753 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0A5E1091C552ED900125753 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,10 +94,10 @@
 		B05EF2701C5661CE0019D9BD /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				B05EF2711C5662100019D9BD /* Taxis.h */,
-				B05EF2721C5662100019D9BD /* Taxis.m */,
 				B05EF2741C56623E0019D9BD /* Taxi.h */,
 				B05EF2751C56623E0019D9BD /* Taxi.m */,
+				B05EF27E1C5871DF0019D9BD /* Taxis.h */,
+				B05EF27F1C5871E00019D9BD /* Taxis.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -109,6 +111,14 @@
 				B05EF2791C56C7850019D9BD /* LocationController.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		B05EF2811C5876940019D9BD /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B05EF2821C5876940019D9BD /* pinHome.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		B0A5E0FA1C552ED900125753 = {
@@ -132,6 +142,7 @@
 		B0A5E1051C552ED900125753 /* TestEasyTaxi */ = {
 			isa = PBXGroup;
 			children = (
+				B05EF2811C5876940019D9BD /* Images */,
 				B05EF2771C56C70C0019D9BD /* ViewControllers */,
 				B05EF2701C5661CE0019D9BD /* Objects */,
 				B05EF26A1C55CBFB0019D9BD /* Services */,
@@ -220,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0A5E1191C552ED900125753 /* LaunchScreen.storyboard in Resources */,
+				B05EF2831C5876940019D9BD /* pinHome.png in Resources */,
 				B05EF26F1C55D0940019D9BD /* Configuration.plist in Resources */,
 				B0A5E1161C552ED900125753 /* Assets.xcassets in Resources */,
 				B0A5E1111C552ED900125753 /* Main.storyboard in Resources */,
@@ -281,13 +293,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B05EF2801C5871E00019D9BD /* Taxis.m in Sources */,
 				B05EF27D1C56C8F00019D9BD /* Utils.m in Sources */,
 				B0A5E10E1C552ED900125753 /* ViewController.m in Sources */,
 				B05EF26D1C55CC5A0019D9BD /* LocationService.m in Sources */,
 				B05EF2761C56623E0019D9BD /* Taxi.m in Sources */,
 				B0A5E1141C552ED900125753 /* TestEasyTaxi.xcdatamodeld in Sources */,
 				B05EF27A1C56C7850019D9BD /* LocationController.m in Sources */,
-				B05EF2731C5662100019D9BD /* Taxis.m in Sources */,
 				B0A5E10B1C552ED900125753 /* AppDelegate.m in Sources */,
 				B0A5E1081C552ED900125753 /* main.m in Sources */,
 			);

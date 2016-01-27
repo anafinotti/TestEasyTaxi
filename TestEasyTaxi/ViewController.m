@@ -7,7 +7,11 @@
 //
 
 #import "ViewController.h"
-#import "Taxi.h"
+#import "LocationService.h"
+#import "Taxis.h"
+#import "Utils.h"
+#import <GoogleMaps/GoogleMaps.h>
+
 
 @interface ViewController ()
 
@@ -145,10 +149,11 @@
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude);
     
+    marker.icon = [Utils image:[UIImage imageNamed:@"pinHome"] scaledToSize:CGSizeMake(50.0f, 50.0f)];
     marker.map = self.mapView;
+    marker.title = @"Current location";
     self.view = self.mapView;
 }
-
 
 #pragma mark LocationManager delegate
 
@@ -165,48 +170,87 @@
     didUpdateLocations:(NSArray<CLLocation *> *)locations {
     
     NSError *error;
-    NSString *geocodeApiUrl = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=false",self.locationManager.location.coordinate.latitude,self.locationManager.location.coordinate.longitude];
-
-    NSLog(@"URL: %@",geocodeApiUrl);
-    geocodeApiUrl = [geocodeApiUrl stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-
-    NSData *jsonResponse = [NSData dataWithContentsOfURL:[NSURL URLWithString:geocodeApiUrl]];
-
-    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonResponse options:kNilOptions error:&error];
-
-    NSArray<NSDictionary *> *formattedAddressArray = [[jsonDict valueForKey:@"results"] valueForKey:@"formatted_address"];
-
-    NSArray<NSDictionary *> *locationCoordinate = [[jsonDict valueForKey:@"results"] valueForKeyPath:@"geometry.location"];
-
-
-    for (int i = 0; i < formattedAddressArray.count; i++)
-    {
-        Taxi *model = [[Taxi alloc] initWithDictionary:[locationCoordinate objectAtIndex:i] error:&error];
-        GMSMarker *marker = [[GMSMarker alloc] init];
-        marker.position = CLLocationCoordinate2DMake(model.lat, model.lng);
-        //marker.title = address;
-        marker.map = self.mapView;
-    }
+    
+//    CLLocation *location = [locations firstObject];
+//    GMSMarker *marker = [[GMSMarker alloc] init];
+//    marker.position = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
+//    //marker.title = address;
+//    marker.map = self.mapView;
+//    
+//    
+//    NSString *geocodeApiUrl = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=false",self.locationManager.location.coordinate.latitude,self.locationManager.location.coordinate.longitude];
+//
+//    NSLog(@"URL: %@",geocodeApiUrl);
+//    geocodeApiUrl = [geocodeApiUrl stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+//
+//    NSData *jsonResponse = [NSData dataWithContentsOfURL:[NSURL URLWithString:geocodeApiUrl]];
+//
+//    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonResponse options:kNilOptions error:&error];
+//
+//    NSArray<NSDictionary *> *formattedAddressArray = [[jsonDict valueForKey:@"results"] valueForKey:@"formatted_address"];
+//
+//    NSArray<NSDictionary *> *locationCoordinate = [[jsonDict valueForKey:@"results"] valueForKeyPath:@"geometry.location"];
+//
+//
+//    for (int i = 0; i < formattedAddressArray.count; i++)
+//    {
+//        NSString* address = [NSString stringWithFormat:@"%@", [formattedAddressArray objectAtIndex:i]];
+//        Taxi *model = [[Taxi alloc] initWithDictionary:[locationCoordinate objectAtIndex:i] error:&error];
+//        GMSMarker *marker = [[GMSMarker alloc] init];
+//        marker.position = CLLocationCoordinate2DMake(model.lat, model.lng);
+//        marker.title = address;
+//        marker.map = self.mapView;
+//    }
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSLog(@"search button clicked");
-    
+
+    [self.mapView clear];
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
     [geocoder geocodeAddressString:searchBar.text inRegion:nil
                  completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
                      
                      CLPlacemark *myPlacemark = [placemarks firstObject];
-                     
-                     
-                     NSString *countryCode = myPlacemark.ISOcountryCode;
-                     NSString *countryName = myPlacemark.country;
-                     NSString *city1 = myPlacemark.subLocality;
-                     NSString *city2 = myPlacemark.locality;
-                 }];
 
-    
+                     NSMutableString *address = [NSMutableString stringWithString:myPlacemark.locality];
+                     [address appendString:@", "];
+                     [address appendString:myPlacemark.subLocality];
+                     [address appendString:@"-"];
+                     [address appendString:myPlacemark.country];
+                     
+                     CLLocation *location = myPlacemark.location;
+                     
+                     [LocationService getTaxis:location.coordinate.latitude
+                                     longitude:location.coordinate.longitude
+                                       success:^(Taxis *taxis) {
+                                           
+                                           GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] init];
+
+                                           for (Taxi *taxi in taxis.taxis) {
+                                          
+                                            
+                                               CLLocation *location = [[CLLocation alloc] initWithLatitude:taxi.lat longitude:taxi.lng];
+                                               
+                                               GMSMarker *marker = [[GMSMarker alloc] init];
+                                               marker.position = CLLocationCoordinate2DMake(taxi.lat, taxi.lng);
+                                               marker.title = address;
+                                               bounds = [bounds includingCoordinate:marker.position];
+                                               marker.map = self.mapView;
+                                           }
+                                           [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:30.0f]];
+
+                      
+
+                                    
+                                           
+                                           
+                         NSLog(@"success!");
+                     } failure:^(NSError *error) {
+                         NSLog(@"%@", error);
+                     }];
+                 }];
 }
 
 @end

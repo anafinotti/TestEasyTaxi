@@ -11,31 +11,43 @@
 #import <AFNetworking.h>
 #import <AFHTTPSessionManager.h>
 #import "Utils.h"
-#import "Taxis.h"
-#import "Taxi.h"
+
 
 @implementation LocationService
-
 
 //TODO
 //fazer um bloco de sucesso, para retornar para a viewcontroller.
 //mostrar todos os taxis proximos do local pesquisado na search bar.
-+(void)getTaxis:(NSNumber *)latitude
-      longitude:(NSNumber *)longitude {
++(void)getTaxis:(double)latitude
+      longitude:(double)longitude
+        success:(void (^)(Taxis *taxis))success
+        failure:(void (^)(NSError *error))failure
+{
+    NSNumber*latitudeee = [NSNumber numberWithDouble:latitude]; // (double)latitude;
+    NSNumber*lnggg = [NSNumber numberWithDouble:longitude];
+    
+    
     
     NSString* serverAddress = [Utils getServerAddress];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary *params = @{@"lat": latitude,
-                             @"lng": longitude};
+    NSDictionary *params = @{@"lat":latitudeee,
+                             @"lng": lnggg};
     [manager GET:serverAddress parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         
         NSError *error = nil;
-        Taxis *model = [[Taxis alloc] initWithDictionary:responseObject error:&error];
+        
+        NSMutableArray *arrayTaxi = [Taxi arrayOfModelsFromDictionaries:responseObject[@"taxis"] error:&error];
+
+        Taxis *taxis = [[Taxis alloc] init];
+        taxis.taxis = arrayTaxi;
+        
+        success(taxis);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        failure(error);
     }];
 }
 @end
