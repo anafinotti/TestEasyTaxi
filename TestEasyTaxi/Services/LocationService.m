@@ -12,8 +12,8 @@
 #import <AFHTTPSessionManager.h>
 #import "Utils.h"
 
-
 @implementation LocationService
+
 
 //TODO
 //fazer um bloco de sucesso, para retornar para a viewcontroller.
@@ -31,6 +31,10 @@
     NSString* serverAddress = [Utils getConfigurationValueForKey:@"serverAddress"];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSTimeInterval timeInterval = 15;
+    manager.requestSerializer.timeoutInterval = timeInterval;
+    
     NSDictionary *params = @{@"lat":latitudeee,
                              @"lng": lnggg};
     [manager GET:serverAddress parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {

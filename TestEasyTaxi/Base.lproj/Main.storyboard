@@ -23,16 +23,6 @@
             </objects>
             <point key="canvasLocation" x="-264" y="333"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="ZyU-hF-08W"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1031" y="287"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="jUT-oo-LHj">
             <objects>
@@ -42,12 +32,34 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="a5r-pW-js8"/>
+                        <segue destination="QYK-DT-UPj" kind="relationship" relationship="rootViewController" id="ipq-uH-a1w"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IN0-yX-2XG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="568" y="267"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="9xe-62-Fvw">
+            <objects>
+                <viewController id="QYK-DT-UPj" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DaY-PS-8zV"/>
+                        <viewControllerLayoutGuide type="bottom" id="fic-zr-CnT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="g1K-NE-Kcj" customClass="GMSMapView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="nws-EL-FWY"/>
+                    <connections>
+                        <outlet property="mapView" destination="g1K-NE-Kcj" id="lk4-sc-Dfg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HM2-od-Ihp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="970" y="267"/>
         </scene>
     </scenes>
 </document>

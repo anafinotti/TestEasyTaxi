@@ -152,7 +152,6 @@
                                                                  zoom:6];
     self.mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     self.mapView.delegate = self;
-    self.mapView.myLocationEnabled = YES;
 
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude);
@@ -162,6 +161,9 @@
     marker.userData = @{ @"driverName":@"Home" };
     marker.title = @"Current location";
     self.view = self.mapView;
+    
+    self.mapView.myLocationEnabled = YES;
+    self.mapView.settings.myLocationButton = YES;
 }
 
 -(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
@@ -224,7 +226,7 @@
 
     [searchBar resignFirstResponder];
     
-    //[self.mapView clear];
+    [self.mapView clear];
     
     [self removeObservers];
     [self setGoogleMap];
@@ -248,32 +250,52 @@
                                            
                                            googlePins = [[NSMutableArray alloc] init];
                                            
-                                           for (Taxi *taxi in taxis.taxis) {
-                                               GMSMarker *marker = [[GMSMarker alloc] init];
-                                               marker.position = CLLocationCoordinate2DMake(taxi.lat, taxi.lng);
-                                               marker.infoWindowAnchor = CGPointMake(0.44f, 0.0f);
-                                               bounds = [bounds includingCoordinate:marker.position];
-                                               marker.map = self.mapView;
-                                               marker.userData = @{ @"driverName":taxi.driverName,
-                                                                    @"driverCar":taxi.driverCar};
-                                               
-                                               [googlePins addObject:marker];
+                                           if([taxis.taxis count] > 0) {
+                                           
+                                               for (Taxi *taxi in taxis.taxis) {
+                                                   GMSMarker *marker = [[GMSMarker alloc] init];
+                                                   marker.position = CLLocationCoordinate2DMake(taxi.lat, taxi.lng);
+                                                   marker.infoWindowAnchor = CGPointMake(0.44f, 0.0f);
+                                                   bounds = [bounds includingCoordinate:marker.position];
+                                                   marker.map = self.mapView;
+                                                   marker.userData = @{ @"driverName":taxi.driverName,
+                                                                        @"driverCar":taxi.driverCar};
+                                                   
+                                                   [googlePins addObject:marker];
+                                               }
+                                               [SVProgressHUD dismiss];
+                                               [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:30.0f]];
                                            }
-                                           
-                                           [SVProgressHUD dismiss];
-                                           [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:30.0f]];
-                                           
+                                           else {
+                                               [SVProgressHUD dismiss];
+                                               [self showAlert:@"No results found"];
+                                               
+                                           }
                                            searchBar.text = @"";
                  
                          NSLog(@"success!");
                      } failure:^(NSError *error) {
                          NSLog(@"%@", error);
                          [SVProgressHUD dismiss];
+                         [self showAlert:error.localizedDescription];
                      }];
                  }];
 }
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     
+}
+
+
+-(void)showAlert:(NSString*)errorMessage {
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:@"Alert"
+                                message:errorMessage
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alert addAction:ok];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 @end

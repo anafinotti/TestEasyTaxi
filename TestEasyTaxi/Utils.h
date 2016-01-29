@@ -13,4 +13,5 @@
 
 +(NSString*)getConfigurationValueForKey:(NSString*)key;
 +(UIImage *)image:(UIImage*)originalImage scaledToSize:(CGSize)size;
+
 @end
