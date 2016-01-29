@@ -16,4 +16,8 @@
       longitude:(double)longitude
         success:(void (^)(Taxis *taxis))success
         failure:(void (^)(NSError *error))failure;
+
+-(NSString*)getFormatterAddressFromGoogleApi:(double)latitude
+                                   longitude:(double)longitude;
+
 @end

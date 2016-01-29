@@ -28,7 +28,7 @@
     
     
     
-    NSString* serverAddress = [Utils getServerAddress];
+    NSString* serverAddress = [Utils getConfigurationValueForKey:@"serverAddress"];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *params = @{@"lat":latitudeee,
@@ -49,5 +49,27 @@
         NSLog(@"Error: %@", error);
         failure(error);
     }];
+}
+
+-(NSString*)getFormatterAddressFromGoogleApi:(double)latitude
+                              longitude:(double)longitude
+{
+    NSString *url = [Utils getConfigurationValueForKey:@"apiGoogleGetAddress"];
+    
+    NSString *geocodeApiUrl = [NSString stringWithFormat:url, latitude, longitude];
+    
+    NSLog(@"URL: %@",geocodeApiUrl);
+    geocodeApiUrl = [geocodeApiUrl stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    
+    NSData *jsonResponse = [NSData dataWithContentsOfURL:[NSURL URLWithString:geocodeApiUrl]];
+    
+    NSError *error;
+    
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonResponse options:kNilOptions error:&error];
+    
+    NSArray<NSDictionary *> *formattedAddressArray = [[jsonDict valueForKey:@"results"] valueForKey:@"formatted_address"];
+    
+    return [NSString stringWithFormat:@"%@,", [formattedAddressArray firstObject]];
+    
 }
 @end

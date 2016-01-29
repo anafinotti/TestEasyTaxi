@@ -10,10 +10,10 @@
 
 @implementation Utils
 
-+(NSString*)getServerAddress {
++(NSString*)getConfigurationValueForKey:(NSString*)key {
     NSDictionary *mainDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Configuration" ofType:@"plist"]];
     
-    return [mainDictionary objectForKey:@"serverAddress"];
+    return [mainDictionary objectForKey:key];
 }
 
 +(UIImage *)image:(UIImage*)originalImage scaledToSize:(CGSize)size

@@ -4,5 +4,7 @@
 <dict>
 	<key>serverAddress</key>
 	<string>http://192.168.2.1:9999/api/gettaxis</string>
+	<key>apiGoogleGetAddress</key>
+	<string>http://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&amp;sensor=false</string>
 </dict>
 </plist>

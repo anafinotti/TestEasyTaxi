@@ -10,50 +10,53 @@
 #import "LocationService.h"
 #import "Taxis.h"
 #import "Utils.h"
+#import "InfoWindow.h"
+#import "SVProgressHUD.h"
 #import <GoogleMaps/GoogleMaps.h>
 
 
-@interface ViewController ()
-
+@interface ViewController () {
+    NSMutableArray *googlePins;
+}
 @end
 
 @implementation ViewController {
     BOOL firstLocationUpdate_;
-    CLLocation *taxiLocation;
 }
-
--(instancetype)initWithCoordinate:(CLLocation*)location {
-    //if(!self)
-        //self = ;
-    
-    taxiLocation = location;
-    
-    return self;
-}
-
--(void)setTaxiLocation {
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(taxiLocation.coordinate.latitude, taxiLocation.coordinate.longitude);
-
-    marker.map = self.mapView;
-}
+#pragma mark View
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [self setupSearchBar];
 
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    [self.locationManager startUpdatingLocation];
+    [self startUpdatingLocation];
     
     [self setGoogleMap];
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self addObservers];
 
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeObservers];
+    // Implement here if the view has registered KVO
+
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)dismissKeyboard {
+    [self.view endEditing:YES];
+}
+
+#pragma mark SearchBar
 
 -(void)setupSearchBar {
     UISearchBar *searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,0, 230,44)];
@@ -96,26 +99,16 @@
             
         }
     }
-    
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.mapView addObserver:self forKeyPath:@"myLocation" options:NSKeyValueObservingOptionNew context: nil];
-}
-
--(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    // Implement here if the view has registered KVO
-    [self.mapView removeObserver:self forKeyPath:@"myLocation"];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark KVO
+-(void)addObservers {
+    [self.mapView addObserver:self forKeyPath:@"myLocation" options:NSKeyValueObservingOptionNew context: nil];
+}
+
+-(void)removeObservers {
+    [self.mapView removeObserver:self forKeyPath:@"myLocation"];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -131,12 +124,27 @@
     }
 }
 
+#pragma mark Current Location
+
+-(void)startUpdatingLocation {
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    [self.locationManager startUpdatingLocation];
+}
+
+
 - (NSString *)deviceLocation
 {
     NSString *theLocation = [NSString stringWithFormat:@"latitude: %f longitude: %f", self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
     return theLocation;
 }
 
+
+#pragma mark GMSMapViewDelegate
 
 -(void)setGoogleMap {
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.locationManager.location.coordinate.latitude
@@ -151,11 +159,48 @@
     
     marker.icon = [Utils image:[UIImage imageNamed:@"pinHome"] scaledToSize:CGSizeMake(50.0f, 50.0f)];
     marker.map = self.mapView;
+    marker.userData = @{ @"driverName":@"Home" };
     marker.title = @"Current location";
     self.view = self.mapView;
 }
 
-#pragma mark LocationManager delegate
+-(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+    NSLog(@"marker info Window >>>>>>");
+    
+
+    
+    LocationService *svc = [[LocationService alloc] init];
+    NSString *address = [svc getFormatterAddressFromGoogleApi:marker.position.latitude longitude:marker.position.longitude];
+    
+    InfoWindow *view =  [[[NSBundle mainBundle] loadNibNamed:@"InfoWindow" owner:self options:nil] objectAtIndex:0];
+    view.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    view.layer.borderWidth = 2.0f;
+    view.labelDriverName.text = [marker.userData objectForKey:@"driverName"];
+    view.labelDriverCar.text = [marker.userData objectForKey:@"driverCar"];
+    view.labelAddress.text = address;
+    
+   
+    
+    return view;
+}
+
+-(BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+    NSLog(@"Did Tap Marker >>>>>>");
+    
+    [mapView setSelectedMarker:marker];
+    
+    GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] init];
+    bounds = [bounds includingCoordinate:marker.position];
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:marker.position.latitude
+                                                            longitude:marker.position.longitude
+                                                                 zoom:18];
+    
+    [self.mapView animateToCameraPosition:camera];
+    return YES;
+}
+
+#pragma mark CLLocationManager delegate
 
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
       if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
@@ -165,60 +210,33 @@
     }
 }
 
-
--(void)locationManager:(CLLocationManager *)manager
-    didUpdateLocations:(NSArray<CLLocation *> *)locations {
+-(NSString *)getAddress:(double)latitude
+              longitude:(double)longitude {
     
-    NSError *error;
-    
-//    CLLocation *location = [locations firstObject];
-//    GMSMarker *marker = [[GMSMarker alloc] init];
-//    marker.position = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
-//    //marker.title = address;
-//    marker.map = self.mapView;
-//    
-//    
-//    NSString *geocodeApiUrl = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=false",self.locationManager.location.coordinate.latitude,self.locationManager.location.coordinate.longitude];
-//
-//    NSLog(@"URL: %@",geocodeApiUrl);
-//    geocodeApiUrl = [geocodeApiUrl stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-//
-//    NSData *jsonResponse = [NSData dataWithContentsOfURL:[NSURL URLWithString:geocodeApiUrl]];
-//
-//    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonResponse options:kNilOptions error:&error];
-//
-//    NSArray<NSDictionary *> *formattedAddressArray = [[jsonDict valueForKey:@"results"] valueForKey:@"formatted_address"];
-//
-//    NSArray<NSDictionary *> *locationCoordinate = [[jsonDict valueForKey:@"results"] valueForKeyPath:@"geometry.location"];
-//
-//
-//    for (int i = 0; i < formattedAddressArray.count; i++)
-//    {
-//        NSString* address = [NSString stringWithFormat:@"%@", [formattedAddressArray objectAtIndex:i]];
-//        Taxi *model = [[Taxi alloc] initWithDictionary:[locationCoordinate objectAtIndex:i] error:&error];
-//        GMSMarker *marker = [[GMSMarker alloc] init];
-//        marker.position = CLLocationCoordinate2DMake(model.lat, model.lng);
-//        marker.title = address;
-//        marker.map = self.mapView;
-//    }
+    LocationService *svc = [[LocationService alloc] init];
+    return  [svc getFormatterAddressFromGoogleApi:latitude longitude:longitude];
 }
+
+#pragma mark UISearchBar delegate
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSLog(@"search button clicked");
 
-    [self.mapView clear];
+    [searchBar resignFirstResponder];
+    
+    //[self.mapView clear];
+    
+    [self removeObservers];
+    [self setGoogleMap];
+    [self addObservers];
+
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
+    [SVProgressHUD showWithStatus:@"Carregando..."];
     [geocoder geocodeAddressString:searchBar.text inRegion:nil
                  completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
                      
                      CLPlacemark *myPlacemark = [placemarks firstObject];
-
-                     NSMutableString *address = [NSMutableString stringWithString:myPlacemark.locality];
-                     [address appendString:@", "];
-                     [address appendString:myPlacemark.subLocality];
-                     [address appendString:@"-"];
-                     [address appendString:myPlacemark.country];
                      
                      CLLocation *location = myPlacemark.location;
                      
@@ -227,30 +245,35 @@
                                        success:^(Taxis *taxis) {
                                            
                                            GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] init];
-
+                                           
+                                           googlePins = [[NSMutableArray alloc] init];
+                                           
                                            for (Taxi *taxi in taxis.taxis) {
-                                          
-                                            
-                                               CLLocation *location = [[CLLocation alloc] initWithLatitude:taxi.lat longitude:taxi.lng];
-                                               
                                                GMSMarker *marker = [[GMSMarker alloc] init];
                                                marker.position = CLLocationCoordinate2DMake(taxi.lat, taxi.lng);
-                                               marker.title = address;
+                                               marker.infoWindowAnchor = CGPointMake(0.44f, 0.0f);
                                                bounds = [bounds includingCoordinate:marker.position];
                                                marker.map = self.mapView;
+                                               marker.userData = @{ @"driverName":taxi.driverName,
+                                                                    @"driverCar":taxi.driverCar};
+                                               
+                                               [googlePins addObject:marker];
                                            }
+                                           
+                                           [SVProgressHUD dismiss];
                                            [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:30.0f]];
-
-                      
-
-                                    
                                            
-                                           
+                                           searchBar.text = @"";
+                 
                          NSLog(@"success!");
                      } failure:^(NSError *error) {
                          NSLog(@"%@", error);
+                         [SVProgressHUD dismiss];
                      }];
                  }];
 }
 
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
+}
 @end

@@ -11,6 +11,6 @@
 
 @interface Utils : NSObject
 
-+(NSString*)getServerAddress;
++(NSString*)getConfigurationValueForKey:(NSString*)key;
 +(UIImage *)image:(UIImage*)originalImage scaledToSize:(CGSize)size;
 @end

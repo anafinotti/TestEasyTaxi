@@ -11,7 +11,6 @@
 		B05EF26D1C55CC5A0019D9BD /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF26C1C55CC5A0019D9BD /* LocationService.m */; };
 		B05EF26F1C55D0940019D9BD /* Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = B05EF26E1C55D0930019D9BD /* Configuration.plist */; };
 		B05EF2761C56623E0019D9BD /* Taxi.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF2751C56623E0019D9BD /* Taxi.m */; };
-		B05EF27A1C56C7850019D9BD /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF2791C56C7850019D9BD /* LocationController.m */; };
 		B05EF27D1C56C8F00019D9BD /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF27C1C56C8F00019D9BD /* Utils.m */; };
 		B05EF2801C5871E00019D9BD /* Taxis.m in Sources */ = {isa = PBXBuildFile; fileRef = B05EF27F1C5871E00019D9BD /* Taxis.m */; };
 		B05EF2831C5876940019D9BD /* pinHome.png in Resources */ = {isa = PBXBuildFile; fileRef = B05EF2821C5876940019D9BD /* pinHome.png */; };
@@ -22,6 +21,9 @@
 		B0A5E1141C552ED900125753 /* TestEasyTaxi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B0A5E1121C552ED900125753 /* TestEasyTaxi.xcdatamodeld */; };
 		B0A5E1161C552ED900125753 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0A5E1151C552ED900125753 /* Assets.xcassets */; };
 		B0A5E1191C552ED900125753 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0A5E1171C552ED900125753 /* LaunchScreen.storyboard */; };
+		B0F30DE71C5AFF1F00144B7F /* InfoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F30DE51C5AFF1F00144B7F /* InfoWindow.m */; };
+		B0F30DE81C5AFF1F00144B7F /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F30DE61C5AFF1F00144B7F /* InfoWindow.xib */; };
+		B0F30DF11C5B047500144B7F /* imageDriver.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F30DF01C5B047500144B7F /* imageDriver.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +35,6 @@
 		B05EF26E1C55D0930019D9BD /* Configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Configuration.plist; sourceTree = "<group>"; };
 		B05EF2741C56623E0019D9BD /* Taxi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Taxi.h; sourceTree = "<group>"; };
 		B05EF2751C56623E0019D9BD /* Taxi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Taxi.m; sourceTree = "<group>"; };
-		B05EF2781C56C7850019D9BD /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationController.h; path = ViewControllers/LocationController.h; sourceTree = "<group>"; };
-		B05EF2791C56C7850019D9BD /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationController.m; path = ViewControllers/LocationController.m; sourceTree = "<group>"; };
 		B05EF27B1C56C8F00019D9BD /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		B05EF27C1C56C8F00019D9BD /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		B05EF27E1C5871DF0019D9BD /* Taxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Taxis.h; path = Objects/Taxis.h; sourceTree = "<group>"; };
@@ -51,6 +51,10 @@
 		B0A5E1151C552ED900125753 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0A5E1181C552ED900125753 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0A5E11A1C552ED900125753 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0F30DE41C5AFF1F00144B7F /* InfoWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoWindow.h; path = Cells/InfoWindow.h; sourceTree = "<group>"; };
+		B0F30DE51C5AFF1F00144B7F /* InfoWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoWindow.m; path = Cells/InfoWindow.m; sourceTree = "<group>"; };
+		B0F30DE61C5AFF1F00144B7F /* InfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InfoWindow.xib; path = Cells/InfoWindow.xib; sourceTree = "<group>"; };
+		B0F30DF01C5B047500144B7F /* imageDriver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageDriver.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +111,6 @@
 			children = (
 				B0A5E10C1C552ED900125753 /* ViewController.h */,
 				B0A5E10D1C552ED900125753 /* ViewController.m */,
-				B05EF2781C56C7850019D9BD /* LocationController.h */,
-				B05EF2791C56C7850019D9BD /* LocationController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -116,6 +118,7 @@
 		B05EF2811C5876940019D9BD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B0F30DF01C5B047500144B7F /* imageDriver.png */,
 				B05EF2821C5876940019D9BD /* pinHome.png */,
 			);
 			path = Images;
@@ -142,6 +145,7 @@
 		B0A5E1051C552ED900125753 /* TestEasyTaxi */ = {
 			isa = PBXGroup;
 			children = (
+				B0F30DE91C5AFF2400144B7F /* Cells */,
 				B05EF2811C5876940019D9BD /* Images */,
 				B05EF2771C56C70C0019D9BD /* ViewControllers */,
 				B05EF2701C5661CE0019D9BD /* Objects */,
@@ -167,6 +171,16 @@
 				B05EF26E1C55D0930019D9BD /* Configuration.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B0F30DE91C5AFF2400144B7F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B0F30DE41C5AFF1F00144B7F /* InfoWindow.h */,
+				B0F30DE51C5AFF1F00144B7F /* InfoWindow.m */,
+				B0F30DE61C5AFF1F00144B7F /* InfoWindow.xib */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +249,8 @@
 				B05EF26F1C55D0940019D9BD /* Configuration.plist in Resources */,
 				B0A5E1161C552ED900125753 /* Assets.xcassets in Resources */,
 				B0A5E1111C552ED900125753 /* Main.storyboard in Resources */,
+				B0F30DF11C5B047500144B7F /* imageDriver.png in Resources */,
+				B0F30DE81C5AFF1F00144B7F /* InfoWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,9 +315,9 @@
 				B05EF26D1C55CC5A0019D9BD /* LocationService.m in Sources */,
 				B05EF2761C56623E0019D9BD /* Taxi.m in Sources */,
 				B0A5E1141C552ED900125753 /* TestEasyTaxi.xcdatamodeld in Sources */,
-				B05EF27A1C56C7850019D9BD /* LocationController.m in Sources */,
 				B0A5E10B1C552ED900125753 /* AppDelegate.m in Sources */,
 				B0A5E1081C552ED900125753 /* main.m in Sources */,
+				B0F30DE71C5AFF1F00144B7F /* InfoWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
