@@ -1,0 +1,5 @@
+platform :ios, '8.1'
+pod 'GoogleMaps'
+pod 'AFNetworking', '~> 2.5'
+pod 'JSONModel'
+pod 'SVProgressHUD', '~> 1.1.3'
